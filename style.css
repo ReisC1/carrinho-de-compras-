@@ -33,7 +33,7 @@ body {
 
 .topo h1 {
     margin: 0;
-    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-size: 3.6rem;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1;
@@ -243,19 +243,9 @@ button:focus-visible {
 
 .total strong {
     font-family: var(--fonte);
-    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-size: 2.4rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-}
-
-@media (max-width: 720px) {
-    body {
-        padding: 28px 16px;
-    }
-
-    .balcao {
-        grid-template-columns: 1fr;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
