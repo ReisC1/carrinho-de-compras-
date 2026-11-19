@@ -1,43 +1,24 @@
+// pega os produtos salvos no localStorage, se nao tiver nada comeca vazio
 let produtos = JSON.parse(
     localStorage.getItem("produtos")
 ) || [];
 
-function formatarMoeda(valor) {
-    return valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
-}
-
-function mostrarErro(campo, texto) {
-    document.getElementById("mensagem").textContent = texto;
-    campo.setAttribute("aria-invalid", "true");
-    campo.focus();
-}
-
 function cadastrarProduto(evento) {
     evento.preventDefault();
 
-    let campoNome = document.getElementById("nome");
-    let campoPreco = document.getElementById("preco");
+    let nome = document.getElementById("nome").value;
+    let preco = Number(document.getElementById("preco").value);
 
-    let nome = campoNome.value.trim();
-    let preco = Number(campoPreco.value);
-
-    campoNome.removeAttribute("aria-invalid");
-    campoPreco.removeAttribute("aria-invalid");
-
-    if (nome === "") {
-        mostrarErro(campoNome, "Informe o nome do produto.");
+    // validacao
+    if (nome.trim() == "") {
+        alert("Digite o nome do produto!");
         return;
     }
 
-    if (isNaN(preco) || preco <= 0) {
-        mostrarErro(campoPreco, "Informe um valor maior que zero.");
+    if (preco <= 0) {
+        alert("O valor tem que ser maior que zero!");
         return;
     }
-
-    document.getElementById("mensagem").textContent = "";
 
     let produto = {
         nome: nome,
@@ -52,60 +33,29 @@ function cadastrarProduto(evento) {
     );
 
     document.getElementById("formProduto").reset();
-    campoNome.focus();
 
-    mostrarProdutos(true);
+    mostrarProdutos();
 }
 
-function mostrarProdutos(destacarUltimo) {
+function mostrarProdutos() {
     let lista = document.getElementById("listaProdutos");
     lista.innerHTML = "";
 
     let total = 0;
 
-    if (produtos.length === 0) {
-        let item = document.createElement("li");
-        item.className = "vazio";
-        item.textContent = "Seu carrinho está vazio. Adicione um produto pelo formulário.";
-        lista.appendChild(item);
-    }
-
     for (let produto of produtos) {
         let item = document.createElement("li");
-
-        let nome = document.createElement("span");
-        nome.textContent = produto.nome;
-
-        let pontilhado = document.createElement("span");
-        pontilhado.className = "pontilhado";
-
-        let preco = document.createElement("span");
-        preco.className = "preco";
-        preco.textContent = formatarMoeda(produto.preco);
-
-        item.appendChild(nome);
-        item.appendChild(pontilhado);
-        item.appendChild(preco);
+        item.textContent = produto.nome + " - R$ " + produto.preco.toFixed(2);
         lista.appendChild(item);
 
         total = total + produto.preco;
     }
 
-    if (destacarUltimo) {
-        lista.lastChild.classList.add("novo");
-    }
-
-    let quantidade = produtos.length;
-    document.getElementById("quantidade").textContent =
-        quantidade + (quantidade === 1 ? " item" : " itens");
-
-    document.getElementById("total").textContent = formatarMoeda(total);
+    document.getElementById("total").textContent = total.toFixed(2);
 }
 
 document.getElementById("formProduto")
     .addEventListener("submit", cadastrarProduto);
 
-document.getElementById("data").textContent =
-    new Date().toLocaleDateString("pt-BR");
-
-mostrarProdutos(false);
+// mostra os produtos quando abre a pagina
+mostrarProdutos();
