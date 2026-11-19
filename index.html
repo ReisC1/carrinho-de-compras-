@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="topo">
+        <h1>Carrinho de compras</h1>
+        <p>Adicionar os produtos e acompanhe o total no cupom.</p>
+    </header>
+
+    <main class="balcao">
+        <section class="caixa">
+            <h2>Novo produto</h2>
+
+            <form id="formProduto" novalidate>
+                <label for="nome">Nome do produto</label>
+                <input type="text" id="nome" placeholder="Ex.: Mouse Gamer" autocomplete="off" required>
+
+                <label for="preco">Valor</label>
+                <div class="campo-preco">
+                    <span>R$</span>
+                    <input type="number" id="preco" placeholder="0,00" step="0.01" min="0.01" required>
+                </div>
+
+                <p id="mensagem" class="mensagem" role="alert"></p>
+
+                <button type="submit">Adicionar ao carrinho</button>
+            </form>
+        </section>
+
+        <section class="cupom" aria-label="Produtos no carrinho">
+            <div class="cupom-topo">
+                <strong>Cupom do carrinho</strong>
+                <span id="data"></span>
+            </div>
+
+            <ul id="listaProdutos"></ul>
+
+            <div class="cupom-rodape">
+                <span id="quantidade">0 itens</span>
+                <div class="total">
+                    <span>Total</span>
+                    <strong id="total">R$ 0,00</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
